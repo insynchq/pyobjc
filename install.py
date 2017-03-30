@@ -135,7 +135,7 @@ def sorted_framework_wrappers():
                         max_platform = max_platform[:-1]
                     max_platform = max_platform[1:-1]
 
-        if not (min_platform <= cur_platform <= max_platform):
+        if not is_platform_supported(min_platform, cur_platform, max_platform):
             print("Skipping {!r} because it is not supported on the current platform".format(subdir))
             continue
         frameworks.append(subdir)
@@ -144,6 +144,12 @@ def sorted_framework_wrappers():
 
     frameworks = topological_sort(frameworks, partial_order)
     return frameworks
+
+def is_platform_supported(min_platform, cur_platform, max_platform):
+    # Comparing the version strings directly fails on, e.g., '10.10' > '10.9'.
+    def to_numeric(version_string):
+        return map(int, version_string.split('.'))
+    return to_numeric(min_platform) <= to_numeric(cur_platform) <= to_numeric(max_platform)
 
 def build_project(project, extra_args):
     proj_dir = os.path.join(TOPDIR, project)
