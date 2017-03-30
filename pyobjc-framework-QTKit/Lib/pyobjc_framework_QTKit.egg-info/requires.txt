@@ -1,3 +1,0 @@
-pyobjc-core>=2.5.1
-pyobjc-framework-Cocoa>=2.5.1
-pyobjc-framework-Quartz>=2.5.1
