@@ -363,11 +363,14 @@ def setup(
         os_compatible = False
 
     else:
+        # Comparing the version strings directly fails on, e.g., '10.10' > '10.9'.
+        def to_numeric(version_string):
+            return map(int, version_string.split('.'))
         if min_os_level is not None:
-            if os_level < min_os_level:
+            if to_numeric(os_level) < to_numeric(min_os_level):
                 os_compatible = False
         if max_os_level is not None:
-            if os_level > max_os_level:
+            if to_numeric(os_level) > to_numeric(max_os_level):
                 os_compatible = False
 
     if cmdclass is None:
