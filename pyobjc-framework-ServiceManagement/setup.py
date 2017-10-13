@@ -11,7 +11,9 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 
 setup(
-    min_os_level='10.6',
+    # INSYNC NOTE: While this framework is only available on 10.6, we need to
+    # install this wrapper on the build machine to avoid import errors.
+    min_os_level='10.5',
     name='pyobjc-framework-ServiceManagement',
     version="2.5.1",
     description = "Wrappers for the framework ServiceManagement on Mac OS X",
